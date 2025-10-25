@@ -1,18 +1,18 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using qwcan.patch;
+using qwcannutcracker.patch;
 
-namespace qwcan;
+namespace qwcanNutcracker;
 
-[BepInPlugin("OldBirdAudioRpcPatch", "OldBirdAudioRpcPatch", "1.0.0")]
+[BepInPlugin("NutcrackerDontKickWhenNotAggrod", "NutcrackerDontKickWhenNotAggrod", "1.0.0")]
 public class Plugin : BaseUnityPlugin
 {
     public static Plugin Instance { get; set; }
 
     public static ManualLogSource Log => Instance.Logger;
 
-    private readonly Harmony _harmony = new("OldBirdAudioRpcPatch");
+    private readonly Harmony _harmony = new("NutcrackerDontKickWhenNotAggrod");
 
 
     public Plugin()
@@ -22,7 +22,6 @@ public class Plugin : BaseUnityPlugin
 
     private void Awake()
     {
-
         Log.LogInfo($"Applying patches...");
         ApplyPluginPatch();
         Log.LogInfo($"Patches applied");
@@ -33,6 +32,6 @@ public class Plugin : BaseUnityPlugin
     /// </summary>
     private void ApplyPluginPatch()
     {
-        _harmony.PatchAll(typeof(RadMechPatch));
+        _harmony.PatchAll(typeof(NutcrackerPatch));
     }
 }

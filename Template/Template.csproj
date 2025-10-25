@@ -21,6 +21,9 @@
         <!-- The tag must be in the format v1.2.3 -->
         <!-- https://github.com/adamralph/minver#options -->
         <MinVerTagPrefix>v</MinVerTagPrefix>
+        <Company>qwcan</Company>
+        <Product>NutcrackerPatch</Product>
+        <RootNamespace>qwcanNutcracker</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
