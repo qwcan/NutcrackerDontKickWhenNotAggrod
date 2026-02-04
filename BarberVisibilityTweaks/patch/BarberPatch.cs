@@ -36,8 +36,8 @@ public class BarberPatch
     [HarmonyPrefix]
     private static void SetVisibility(ref ClaySurgeonAI __instance)
     {
-        Debug.Log($"Min: {__instance.minDistance}");
-        Debug.Log($"Max: {__instance.maxDistance}");
+        //Debug.Log($"Min: {__instance.minDistance}");
+        //Debug.Log($"Max: {__instance.maxDistance}");
         __instance.minDistance = Plugin.Instance.minFadingDistance.Value;
         __instance.maxDistance = Plugin.Instance.maxFadingDistance.Value;
 
