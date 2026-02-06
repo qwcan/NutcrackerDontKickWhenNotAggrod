@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using BepInEx.Logging;
 using HarmonyLib;
 using qwcanBarber;
 using UnityEngine;
 using LethalConfig;
+using Unity.Netcode;
 
 namespace qwcanBarber.patch;
 
@@ -38,8 +41,36 @@ public class BarberPatch
     {
         //Debug.Log($"Min: {__instance.minDistance}");
         //Debug.Log($"Max: {__instance.maxDistance}");
-        __instance.minDistance = Plugin.Instance.minFadingDistance.Value;
-        __instance.maxDistance = Plugin.Instance.maxFadingDistance.Value;
+        __instance.minDistance = Plugin.Config.minFadingDistance.Value;
+        __instance.maxDistance = Plugin.Config.maxFadingDistance.Value;
 
+    }
+    
+    
+    
+    [HarmonyPatch(typeof(NetworkManager))]
+    internal static class NetworkPrefabPatch2
+    {
+        private static readonly string MOD_GUID = "BarberVisibilityTweaks";
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(NetworkManager.SetSingleton))]
+        private static void RegisterPrefab()
+        {
+            var prefab = new GameObject(MOD_GUID + " Prefab");
+            prefab.hideFlags |= HideFlags.HideAndDontSave;
+            Object.DontDestroyOnLoad(prefab);
+            var networkObject = prefab.AddComponent<NetworkObject>();
+            var fieldInfo = typeof(NetworkObject).GetField("GlobalObjectIdHash", BindingFlags.Instance | BindingFlags.NonPublic);
+            fieldInfo!.SetValue(networkObject, GetHash(MOD_GUID));
+
+            NetworkManager.Singleton.PrefabHandler.AddNetworkPrefab(prefab);
+            return;
+
+            static uint GetHash(string value)
+            {
+                return value?.Aggregate(17u, (current, c) => unchecked((current * 31) ^ c)) ?? 0u;
+            }
+        }
     }
 }

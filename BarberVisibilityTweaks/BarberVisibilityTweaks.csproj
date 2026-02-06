@@ -39,6 +39,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="com.sigurd.csync">
+        <HintPath>..\..\..\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\v73\BepInEx\plugins\Sigurd-CSync\CSync\com.sigurd.csync.dll</HintPath>
+      </Reference>
       <Reference Include="LethalConfig">
         <HintPath>..\..\..\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\v73\BepInEx\plugins\AinaVT-LethalConfig\LethalConfig\LethalConfig.dll</HintPath>
       </Reference>
